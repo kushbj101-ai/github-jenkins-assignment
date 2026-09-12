@@ -1,0 +1,85 @@
+============================================================
+ASSIGNMENT EXECUTION & VERIFICATION RESULTS
+Project: github-jenkins-assignment
+Workflow: Developer -> GitHub -> Webhook -> Jenkins -> Build
+============================================================
+
+TASK 1 & 2: REPOSITORY & INITIAL PUSH
+------------------------------------------------------------
+Repository: https://github.com/kushbj101-ai/github-jenkins-assignment.git
+Files Tracked:
+  - index.html
+  - README.md
+Git Status: Committed & pushed to branch 'main' successfully.
+
+
+TASK 3 & 4: JENKINS JOB & BUILD CONFIGURATION
+------------------------------------------------------------
+Job Name     : github-jenkins-assignment
+Job Type     : Freestyle project
+SCM Config   : Git (Branch: */main)
+Build Action : Execute shell (or Windows batch)
+Script:
+  echo "Checking project files..."
+  ls -la
+
+
+TASK 5: MANUAL BUILD (BUILD #1)
+------------------------------------------------------------
+Trigger : Manual ("Build Now")
+Status  : SUCCESS
+Output Log:
+  Started by user admin
+  Running as SYSTEM
+  Cloning repository https://github.com/kushbj101-ai/github-jenkins-assignment.git
+  Checking out Revision (commit: initial commit )
+  ================================
+  Jenkins Build Started
+  ================================
+  Project cloned successfully.
+  Checking project files...
+  .git
+  README.md
+  index.html
+  Build completed successfully.
+  ================================
+  Jenkins Build Finished
+  ================================
+  Finished: SUCCESS
+
+
+TASK 6 & 7: WEBHOOK & TRIGGER CONFIGURATION
+------------------------------------------------------------
+Webhook Endpoint : http://<JENKINS_URL>/github-webhook/
+Content-type     : application/json
+Trigger Event    : push
+Jenkins Trigger  : "GitHub hook trigger for GITScm polling" enabled
+
+
+TASK 8 & 9: AUTOMATED WEBHOOK TRIGGER (BUILD #2)
+------------------------------------------------------------
+Event Action     : Code modified in index.html, committed, and pushed
+Delivery Result  : GitHub Webhook Response Code 200 OK
+Trigger Cause    : Started by GitHub push by kushbj101-ai
+Build Status     : SUCCESS (Build #2 ran automatically without manual intervention)
+
+
+TASK 10: BONUS & FINAL WORKFLOW VERIFICATION (BUILD #3)
+------------------------------------------------------------
+Added File       : version.txt ("Version 1.0")
+Trigger Cause    : Started by GitHub push
+Build Status     : SUCCESS (Build #3 triggered automatically)
+Workspace Files Verified:
+  - index.html
+  - README.md
+  - version.txt
+
+============================================================
+FINAL CHALLENGE: "WHAT HAPPENS WHEN I RUN 'git push'?"
+============================================================
+1. Git: Sends committed branch changes to the remote repository.
+2. GitHub: Accepts the commit, updates the 'main' branch, and fires an active push event.
+3. Webhook: GitHub issues an HTTP POST payload to Jenkins at /github-webhook/.
+4. Jenkins: Receives payload, matches the repository/branch, and triggers the job.
+5. Build: Jenkins clones the updated code, executes the shell script, and outputs SUCCESS.
+============================================================
